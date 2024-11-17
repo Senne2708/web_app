@@ -1,5 +1,4 @@
 import { Application, Router, send } from "https://deno.land/x/oak/mod.ts";
-import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
 const app = new Application();
 const router = new Router();
@@ -15,16 +14,29 @@ app.use(async (ctx, next) => {
   }
 });
 
-// Serve static files (React app)
+// Serve index.html
 router.get("/", async (ctx) => {
-  await send(ctx, "index.html", { root: "./public" });
+  await send(ctx, "src/index.html");
 });
 
-// API endpoint to fetch message from Rust backend
+// Serve TypeScript/JavaScript files
+router.get("/(.*)\\.ts", async (ctx) => {
+  const path = ctx.params[0] + ".ts";
+  ctx.response.headers.set("Content-Type", "application/javascript");
+  await send(ctx, `src/${path}`);
+});
+
+router.get("/(.*)\\.tsx", async (ctx) => {
+  const path = ctx.params[0] + ".tsx";
+  ctx.response.headers.set("Content-Type", "application/javascript");
+  await send(ctx, `src/${path}`);
+});
+
+// API endpoint
 router.get("/api/message", async (ctx) => {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     const response = await fetch("http://127.0.0.1:8080", {
       signal: controller.signal,
@@ -45,7 +57,6 @@ router.get("/api/message", async (ctx) => {
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-// Serve the server
 const port = 8081;
 console.log(`Server running at http://localhost:${port}`);
 await app.listen({ port });
