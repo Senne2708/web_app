@@ -1,9 +1,11 @@
 import { Tabs } from '@mantine/core';
 
-export function Settings() {
+const Settings = () => {
   return (
     <Tabs.Panel value="settings">
       Settings
     </Tabs.Panel>
   )
-}
+};
+
+export default Settings;
