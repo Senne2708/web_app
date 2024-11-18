@@ -1,1 +1,46 @@
-**/target
+# Node.js
+frontend/node_modules/
+frontend/package-lock.json
+frontend/tsconfig.json
+frontend/public/
+
+# Logs
+frontend/logs/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Build
+frontend/dist/
+frontend/.next/
+frontend/out/
+
+# Environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Cache
+frontend/.cache/
+frontend/.parcel-cache/
+frontend/.eslintcache
+frontend/.turbo/
+
+# Rust
+rust-backend/target/
+rust-backend/Cargo.lock
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+*.iml
+
+# Temp files
+*.tmp
+*.temp
+*.log
